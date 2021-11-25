@@ -194,6 +194,19 @@ class _Client(object):
                 ),
             )
 
+        before_send_transaction = self.options["before_send_transaction"]
+        if before_send_transaction is not None and event.get("type") == "transaction":
+            new_event = None
+            with capture_internal_exceptions():
+                new_event = before_send_transaction(event, hint or {})
+            if new_event is None:
+                logger.info("before send transaction dropped event (%s)", event)
+                if self.transport:
+                    self.transport.record_lost_event(
+                        "before_send_transaction", data_category="error"
+                    )
+            event = new_event  # type: ignore
+
         before_send = self.options["before_send"]
         if before_send is not None and event.get("type") != "transaction":
             new_event = None

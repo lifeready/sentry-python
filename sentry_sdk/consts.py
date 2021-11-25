@@ -67,6 +67,7 @@ class ClientConstructor(object):
         ignore_errors=[],  # type: List[Union[type, str]]  # noqa: B006
         request_bodies="medium",  # type: str
         before_send=None,  # type: Optional[EventProcessor]
+        before_send_transaction=None,  # type: Optional[EventProcessor]
         before_breadcrumb=None,  # type: Optional[BreadcrumbProcessor]
         debug=False,  # type: bool
         attach_stacktrace=False,  # type: bool
