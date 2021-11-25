@@ -205,6 +205,7 @@ class _Client(object):
                     self.transport.record_lost_event(
                         "before_send_transaction", data_category="error"
                     )
+                return None
             event = new_event  # type: ignore
 
         before_send = self.options["before_send"]
